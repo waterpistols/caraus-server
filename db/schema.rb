@@ -11,7 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507151039) do
+ActiveRecord::Schema.define(version: 20160508135728) do
+
+  create_table "company_details", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "route_search_points", force: :cascade do |t|
+    t.decimal  "longitude",            precision: 10, default: 0
+    t.decimal  "latitude",             precision: 10, default: 0
+    t.integer  "route_id",   limit: 4,                default: 0
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string   "name",                  limit: 255,                  default: ""
+    t.decimal  "start_longitude",                     precision: 10, default: 0
+    t.decimal  "start_latitude",                      precision: 10, default: 0
+    t.decimal  "destination_longitude",               precision: 10, default: 0
+    t.decimal  "destination_latitude",                precision: 10, default: 0
+    t.text     "description",           limit: 65535
+    t.string   "start_address",         limit: 255,                  default: ""
+    t.string   "destination_address",   limit: 255,                  default: ""
+    t.float    "distance",              limit: 24,                   default: 0.0
+    t.float    "duration",              limit: 24,                   default: 0.0
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
+  end
 
   create_table "user_authentication_tokens", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   default: 0
@@ -19,6 +47,11 @@ ActiveRecord::Schema.define(version: 20160507151039) do
     t.datetime "expires_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+  end
+
+  create_table "user_details", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160507151039) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "role",                   limit: 4,   default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

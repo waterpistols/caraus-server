@@ -11,8 +11,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def create
-    # render json: user_params, status: 201, location: [:api, user], root: false
+  def create    
     user = User.new(user_params)
 
     if user.save
