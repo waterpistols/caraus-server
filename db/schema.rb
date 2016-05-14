@@ -19,26 +19,26 @@ ActiveRecord::Schema.define(version: 20160508135728) do
   end
 
   create_table "route_search_points", force: :cascade do |t|
-    t.decimal  "longitude",            precision: 10, default: 0
-    t.decimal  "latitude",             precision: 10, default: 0
-    t.integer  "route_id",   limit: 4,                default: 0
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.float    "longitude",  limit: 24, default: 0.0
+    t.float    "latitude",   limit: 24, default: 0.0
+    t.integer  "route_id",   limit: 4,  default: 0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "routes", force: :cascade do |t|
-    t.string   "name",                  limit: 255,                  default: ""
-    t.decimal  "start_longitude",                     precision: 10, default: 0
-    t.decimal  "start_latitude",                      precision: 10, default: 0
-    t.decimal  "destination_longitude",               precision: 10, default: 0
-    t.decimal  "destination_latitude",                precision: 10, default: 0
+    t.string   "name",                  limit: 255,   default: ""
+    t.float    "start_longitude",       limit: 24,    default: 0.0
+    t.float    "start_latitude",        limit: 24,    default: 0.0
+    t.float    "destination_longitude", limit: 24,    default: 0.0
+    t.float    "destination_latitude",  limit: 24,    default: 0.0
     t.text     "description",           limit: 65535
-    t.string   "start_address",         limit: 255,                  default: ""
-    t.string   "destination_address",   limit: 255,                  default: ""
-    t.float    "distance",              limit: 24,                   default: 0.0
-    t.float    "duration",              limit: 24,                   default: 0.0
-    t.datetime "created_at",                                                       null: false
-    t.datetime "updated_at",                                                       null: false
+    t.string   "start_address",         limit: 255,   default: ""
+    t.string   "destination_address",   limit: 255,   default: ""
+    t.float    "distance",              limit: 24,    default: 0.0
+    t.float    "duration",              limit: 24,    default: 0.0
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "user_authentication_tokens", force: :cascade do |t|

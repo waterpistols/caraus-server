@@ -36,6 +36,8 @@ gem 'active_model_serializers'
 
 gem 'devise'
 
+gem 'geocoder'
+
 gem 'rack-cors'
 
 gem 'carrierwave'

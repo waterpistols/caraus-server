@@ -2,11 +2,11 @@ class CreateRoutes < ActiveRecord::Migration
   def change
     create_table :routes do |t|
       t.string :name, default: ""
-      t.decimal :start_longitude, default: 0.0
-      t.decimal :start_latitude, default: 0.0
+      t.float :start_longitude, default: 0.0
+      t.float :start_latitude, default: 0.0
 
-      t.decimal :destination_longitude, default: 0.0
-      t.decimal :destination_latitude, default: 0.0
+      t.float :destination_longitude, default: 0.0
+      t.float :destination_latitude, default: 0.0
       t.text :description
       
       t.string :start_address, default: ""

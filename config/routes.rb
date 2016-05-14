@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       # Session Routes
       post '/sessions/signup', to: 'sessions#signup'
       post '/sessions/reset_password', to: 'sessions#reset_password'
+
+      # Routes - Trasee
+      post '/routes/search', to: 'routes#search'
     end
   end
 end

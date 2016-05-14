@@ -58,12 +58,59 @@ class Api::V1::RoutesController < ApplicationController
     head 204
   end
 
+  def search
+    start_longitude = params[:start_longitude] #firstPoint
+    start_latitude = params[:start_latitude] #firstPoint
+
+    destination_longitude = params[:destination_longitude] #secondPoint
+    destination_latitude = params[:destination_latitude] #secondPoint
+
+    latitude = 0.2
+    longitude = 0.3
+
+    # Create Square
+    northest = start_latitude + latitude
+    southest = start_latitude - latitude
+    eastest = start_longitude + longitude
+    westest = start_longitude - longitude
+
+
+    routes = Route.joins(:route_search_points).where("route_search_points.latitude <= :northest AND route_search_points.latitude >= :southest AND route_search_points.longitude <= :eastest AND route_search_points.longitude >= :westest", northest: northest, southest: southest, eastest: eastest, westest: westest).all
+    
+    response = []
+
+    distance_between_start_to_rsp = Float::INFINITY
+    distance_between_destination_to_rsp = Float::INFINITY
+    
+    start_search_point = nil
+    destination_search_point = nil
+
+    routes.each do |route|
+      search_points = route.route_search_points
+      search_points.each do |rsp|
+        # response.push(rsp)
+        dbstr = Geocoder::Calculations.distance_between([start_latitude, start_longitude], [rsp.latitude, rsp.longitude], {:units => :km})
+        dbdtr = Geocoder::Calculations.distance_between([destination_latitude, destination_longitude], [rsp.latitude, rsp.longitude], {:units => :km})
+
+        if dbstr < distance_between_start_to_rsp
+          start_search_point = rsp          
+        end
+
+        if dbdtr < distance_between_destination_to_rsp
+          destination_search_point = rsp    
+        end        
+      end
+      
+      if start_search_point.id < destination_search_point.id
+        response.push(route)
+      end
+    end
+
+    render json: response, status: 200, root: false
+  end
+
   private
     def route_params
       params.permit(:name, :start_longitude, :start_latitude, :destination_longitude, :destination_latitude, :description, :start_address, :destination_address, :distance, :duration)
-    end
-
-    def display_route(route)
-      
     end
 end
